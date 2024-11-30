@@ -14,7 +14,7 @@ export type PaginatedData<T = any> = {
   links: Record<string, string>;
 };
 
-export type Features = {
+export type Feature = {
   id: number;
   name: string;
   description: string;
