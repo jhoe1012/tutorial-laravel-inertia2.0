@@ -1,7 +1,7 @@
 import { forwardRef, InputHTMLAttributes, useImperativeHandle, useRef } from 'react';
 
 export default forwardRef(function TextAreaInput(
-  { className = '', isFocused = false, ...props }: InputHTMLAttributes<HTMLTextAreaElement> & { isFocused?: boolean },
+  { className = '', rows = 6, ...props }: InputHTMLAttributes<HTMLTextAreaElement> & { rows: number },
   ref,
 ) {
   const localRef = useRef<HTMLTextAreaElement>(null);
@@ -18,6 +18,7 @@ export default forwardRef(function TextAreaInput(
         className
       }
       ref={localRef}
+      rows={rows}
     ></textarea>
   );
 });
