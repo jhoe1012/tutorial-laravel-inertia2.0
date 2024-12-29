@@ -12,7 +12,7 @@ class Feature extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'user_id'];
-    
+
     /**
      * Get all of the upvotes for the Feature
      *
@@ -30,7 +30,7 @@ class Feature extends Model
      */
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->latest();
     }
 
     /**
