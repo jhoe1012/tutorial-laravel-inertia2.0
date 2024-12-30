@@ -1,7 +1,12 @@
+import { can } from '@/helper';
 import { Feature } from '@/types';
+import { usePage } from '@inertiajs/react';
 import Dropdown from './Dropdown';
 
 export default function FeatureActionDropDown({ feature }: { feature: Feature }) {
+  const user = usePage().props.auth.user;
+  if (!can(user, 'manage_features')) return;
+
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -22,7 +27,9 @@ export default function FeatureActionDropDown({ feature }: { feature: Feature })
       </Dropdown.Trigger>
 
       <Dropdown.Content>
+        {/* {can(user, 'edit_features') &&  */}
         <Dropdown.Link href={route('feature.edit', feature.id)}>Edit Feature</Dropdown.Link>
+        {/* {can(user, 'delete_features') && ( */}
         <Dropdown.Link href={route('feature.destroy', feature.id)} method="delete" as="button">
           Delete Feature
         </Dropdown.Link>
