@@ -32,10 +32,12 @@ class FeatureController extends Controller
                     $query->where('user_id', $currentUserId)->where('upvote', 0);
                 }
             ])
-            ->paginate();
+            ->paginate(5);
 
         return Inertia::render('Feature/Index', [
-            'features' => FeatureListResource::collection($paginated)
+            // 'features' => FeatureListResource::collection($paginated)
+            'features' => FeatureListResource::collection($paginated)->collection->toArray(),
+            'page' => $paginated->currentPage(),
         ]);
     }
 

@@ -1,11 +1,12 @@
 import FeatureItem from '@/Components/FeatureItem';
 import { can } from '@/helper';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Feature, PageProps, PaginatedData } from '@/types';
-import { Head, Link, usePoll } from '@inertiajs/react';
+import { Feature, PageProps } from '@/types';
+import { Head, Link, WhenVisible } from '@inertiajs/react';
 
-export default function Index({ auth, features }: PageProps<{ features: PaginatedData<Feature> }>) {
-  usePoll(5000);
+// export default function Index({ auth, features }: PageProps<{ features: PaginatedData<Feature> }>) {
+export default function Index({ auth, features, page }: PageProps<{ features: Feature[]; page: number }>) {
+  // usePoll(5000);
   return (
     <AuthenticatedLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Features</h2>}>
       <Head title="Features" />
@@ -20,9 +21,21 @@ export default function Index({ auth, features }: PageProps<{ features: Paginate
         </div>
       )}
 
-      {features.data.map((feature: Feature) => (
+      {features.map((feature: Feature) => (
         <FeatureItem feature={feature} key={feature.id} />
       ))}
+      <WhenVisible
+        data="features"
+        always
+        fallback={<div> Loading..</div>}
+        params={{
+          data: { page: page + 1 },
+          preserveUrl: true,
+          only: ['features', 'page'],
+        }}
+      >
+        This is visible
+      </WhenVisible>
     </AuthenticatedLayout>
   );
 }
