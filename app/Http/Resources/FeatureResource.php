@@ -24,7 +24,7 @@ class FeatureResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'user_has_upvoted' =>   (bool)$this->user_has_upvoted,
             'user_has_downvoted' => (bool)$this->user_has_downvoted,
-            'comments' => CommentsResource::collection($this->whenLoaded('comments')),
+            // 'comments' => CommentsResource::collection($this->whenLoaded('comments')),
         ];
     }
 }

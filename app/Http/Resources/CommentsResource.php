@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentsResource extends JsonResource
 {
-    public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -15,6 +15,7 @@ class CommentsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        parent::wrap(null);
         return [
             'id' => $this->id,
             'comment' => $this->comment,

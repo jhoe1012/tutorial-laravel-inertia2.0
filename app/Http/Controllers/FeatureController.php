@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentsResource;
 use App\Http\Resources\FeatureListResource;
 use App\Http\Resources\FeatureResource;
 use App\Models\Feature;
@@ -79,10 +80,12 @@ class FeatureController extends Controller
             ->where('user_id', Auth::id())
             ->where('upvote', 0)
             ->exists();
-
         return Inertia::render('Feature/Show', [
             'feature' => new FeatureResource($feature),
-            'comments' => ''
+            'comments' => Inertia::defer(function () use ($feature) {
+                sleep(5);
+                return CommentsResource::collection($feature->comments);
+            })
         ]);
     }
 

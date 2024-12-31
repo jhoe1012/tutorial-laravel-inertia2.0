@@ -2,10 +2,10 @@ import CommentItem from '@/Components/CommentItem';
 import FeatureUpvoteDownvote from '@/Components/FeatureUpvoteDownvote';
 import NewCommentsForm from '@/Components/NewCommentsForm';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Feature } from '@/types';
+import { Comment, Feature } from '@/types';
 import { Head } from '@inertiajs/react';
 
-export default function Show({ feature }: { feature: Feature }) {
+export default function Show({ feature, comments }: { feature: Feature; comments: Comment[] }) {
   return (
     <AuthenticatedLayout
       header={
@@ -24,11 +24,10 @@ export default function Show({ feature }: { feature: Feature }) {
               <div className="flex-1">
                 <h2 className="mb-2 text-2xl"> {feature.name} </h2>
                 <p> {feature.description}</p>
+
                 <div className="mt-8">
                   <NewCommentsForm feature={feature} />
-                  {feature.comments.map((comment) => (
-                    <CommentItem key={comment.id} comment={comment} />
-                  ))}
+                  {comments && comments.map((comment) => <CommentItem key={comment.id} comment={comment} />)}
                 </div>
               </div>
             </div>
