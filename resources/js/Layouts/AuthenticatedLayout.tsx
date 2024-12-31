@@ -2,6 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import { can } from '@/helper';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -33,6 +34,13 @@ export default function Authenticated({ header, children }: PropsWithChildren<{ 
                   Features
                 </NavLink>
               </div>
+              {can(user, 'manage_users') && (
+                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                  <NavLink href={route('user.index')} active={route().current('user.index')}>
+                    Users
+                  </NavLink>
+                </div>
+              )}
             </div>
 
             <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -99,6 +107,18 @@ export default function Authenticated({ header, children }: PropsWithChildren<{ 
               Dashboard
             </ResponsiveNavLink>
           </div>
+          <div className="space-y-1 pb-3 pt-2">
+            <ResponsiveNavLink href={route('feature.index')} active={route().current('feature.index')}>
+              Features
+            </ResponsiveNavLink>
+          </div>
+          {can(user, 'manage_users') && (
+            <div className="space-y-1 pb-3 pt-2">
+              <ResponsiveNavLink href={route('user.index')} active={route().current('user.index')}>
+                Users
+              </ResponsiveNavLink>
+            </div>
+          )}
 
           <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
             <div className="px-4">
@@ -124,7 +144,7 @@ export default function Authenticated({ header, children }: PropsWithChildren<{ 
 
       <div className="py-12">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          {success && <div className="rounded bg-emerald-400 px-6 py-4 mb-8">{success}</div>}
+          {success && <div className="mb-8 rounded bg-emerald-400 px-6 py-4">{success}</div>}
           <main>{children}</main>
         </div>
       </div>
